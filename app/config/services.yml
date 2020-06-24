@@ -29,6 +29,15 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    _instanceof:
+        AppBundle\Calculator\CalculatorInterface:
+            tags: ['app.calculator']
+
+    AppBundle\Registry\CalculatorRegistry:
+        # inject all services tagged with app.calculator as first argument
+        arguments:
+            - !tagged app.calculator
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

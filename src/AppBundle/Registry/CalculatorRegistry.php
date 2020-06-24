@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace AppBundle\Registry;
 
 use AppBundle\Calculator\CalculatorInterface;
-use AppBundle\Calculator\Mk1Calculator;
-use AppBundle\Calculator\Mk2Calculator;
 
 class CalculatorRegistry implements CalculatorRegistryInterface
 {
     /** @var CalculatorInterface[] */
     private $calculators = [];
 
-    public function __construct(Mk1Calculator $mk1Calculator, Mk2Calculator $mk2Calculator)
+    public function __construct(iterable $taggedCalculators)
     {
-        $this->calculators[$mk1Calculator->getSupportedModel()] = $mk1Calculator;
-        $this->calculators[$mk2Calculator->getSupportedModel()] = $mk2Calculator;
+        foreach ($taggedCalculators as $calculator) {
+            $this->calculators[$calculator->getSupportedModel()] = $calculator;
+        }
     }
 
     /**
